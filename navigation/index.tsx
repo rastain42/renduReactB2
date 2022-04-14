@@ -18,6 +18,9 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import Login from '../screens/LoginPage';
+import { useSelector } from 'react-redux';
+import { AsyncStorage } from 'react-native';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,8 +39,13 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const user = useSelector(state => state.counter);
+
+
   return (
     <Stack.Navigator>
+      {user.isAuthenticated === true  && <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />}
+      {user.isAuthenticated === false  && <Stack.Screen name="Login" component={Login} />}
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
@@ -66,7 +74,7 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
+          title: 'Explore',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           headerRight: () => (
             <Pressable
@@ -88,7 +96,7 @@ function BottomTabNavigator() {
         name="TabTwo"
         component={TabTwoScreen}
         options={{
-          title: 'Tab Two',
+          title: 'Profile',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
