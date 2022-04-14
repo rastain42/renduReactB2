@@ -21,12 +21,14 @@ import LinkingConfiguration from './LinkingConfiguration';
 import Login from '../screens/LoginPage';
 import { useSelector } from 'react-redux';
 import { AsyncStorage } from 'react-native';
+import RegisterScreen from '../screens/RegisterScreen';
+import StartScreen from '../screens/StartScreem';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      >
       <RootNavigator />
     </NavigationContainer>
   );
@@ -39,14 +41,16 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const user = useSelector(state => state.counter);
+  const user = useSelector(state => state.user.value);
+  console.log("userr", user)
 
 
   return (
     <Stack.Navigator>
       {user.isAuthenticated === true  && <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />}
-      {user.isAuthenticated === false  && <Stack.Screen name="Login" component={Login} />}
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      {user.isAuthenticated === false  && <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }}/>}
+      {user.isAuthenticated === false  && <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>}
+      {user.isAuthenticated === false  && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>}
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />

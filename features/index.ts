@@ -9,7 +9,7 @@ import { AsyncStorage }  from 'react-native';
 
 
 const reducers = combineReducers({
-  counter: userReducer,
+  user: userReducer,
 });
 
 const persistConfig = {

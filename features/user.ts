@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { signIn } from "../api/users";
+import { signIn, register } from "../api/users";
 
 const initialStateValue = { name: "", token: '', email: "" , isAuthenticated: false};
 
@@ -9,6 +9,18 @@ export const userSignIn = createAsyncThunk(
   async (playload: any, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
     try {
       const response = await signIn(playload) as any
+      return response.data
+    } catch (error) {
+      return rejectWithValue(error)
+    }
+  }
+)
+
+export const userSignUp = createAsyncThunk(
+  'users/signup',
+  async (playload: any, {dispatch, getState, rejectWithValue, fulfillWithValue}) => {
+    try {
+      const response = await register(playload) as any
       return response.data
     } catch (error) {
       return rejectWithValue(error)
@@ -31,12 +43,20 @@ export const userSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(userSignIn.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log(action.payload)
       state.value = {...action.payload, isAuthenticated: true};
       state.status = 'Success';
 
     }),
     builder.addCase(userSignIn.rejected, (state, action) => {
+      // Add user to the state array
+      state.status = 'Rejected';
+    }), 
+    builder.addCase(userSignUp.fulfilled, (state, action) => {
+      // Add user to the state array
+      console.log("good")
+
+    }),
+    builder.addCase(userSignUp.rejected, (state, action) => {
       // Add user to the state array
       state.status = 'Rejected';
     })
