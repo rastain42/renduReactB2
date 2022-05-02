@@ -8,8 +8,16 @@ import Colors from '../constants/Colors';
 import { MonoText } from './StyledText';
 import { Text, View } from './Themed';
 import {  Button , Image, ImageBackground} from 'react-native';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function EditScreenInfo({ path }: { path: string }) {
+  const user = useSelector((state) => state.user.value);
+
+
+  const [users, setusers] = useState([]);
+  const [usersLength, setusersLength] = useState([]);
+
 
   const getCardsLength = (size: number) => {
     const res: any = []
@@ -18,42 +26,68 @@ export default function EditScreenInfo({ path }: { path: string }) {
     }
     return res
   }
+  
 
-  const cardsItem = [
-    {
-      title: 'Card 1',
-    },
-    {
-      title: 'Card 2',
-    },
-    {
-      title: 'Card 3',
-    },
-    {
-      title: 'Card 4',
-    },
-    {
-      title: 'Card 5',
+  const getUsers = async () => {
+    const result = await  axios.get('https://8ec2-77-196-149-138.eu.ngrok.io' + '/users/')
+    result.data.map((user: any) => {
+    })
+  
+
+    setusers(result.data)
+  }
+  useEffect(() => {
+    // if(users.length === 0) {
+      getUsers()
+      // getCardsLength(users.length)
+      setusersLength(getCardsLength(users.length))
+    }, [2]);
+
+    const match = async (userId: string) => {
+      const result = await  axios.post('https://8ec2-77-196-149-138.eu.ngrok.io' + '/meets/', {
+          "usersIds": ["2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2", userId]
+      })
+      if(result.data.matched == true) {
+      }
     }
-  ]
-  console.log(getCardsLength(cardsItem.length))
-  const image = { uri: "https://reactjs.org/logo-og.png" };
 
+  const image = { uri: "https://i.pinimg.com/originals/92/f0/ed/92f0edd9b0ecefdd5b7a48b8e1f7d340.jpg" };
+if(users.length === 0) {
+  return (
+    <View style={styles.container}>
+      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <Text style={styles.title}>
+        Loading
+      </Text>
+    </View>
+  );
+} else {
   return (
       <View style={styles.container}>
         <Swiper
-            cards={[1]}
+            cards={getCardsLength(users.length)}
             renderCard={(card: number) => {
+            
+                const image = { uri: "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg" };
                 return (
-                    <View style={styles.card}>
-                        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <Text style={styles.text}>Inside</Text>
-    </ImageBackground>
-                    </View>
-                )
+                  <View style={styles.card}>
+                      <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+                      <Text style={styles.text}>{users[card].name}</Text>
+                     </ImageBackground>
+                  </View>
+              )
             }}
-            onSwiped={(cardIndex) => {console.log(cardIndex)}}
-            onSwipedAll={() => {console.log('onSwipedAll')}}
+            onSwipedRight={(cardIndex) => {match(users[cardIndex].id)}}
+            onSwipedAll={() => {
+              return (
+                <View style={styles.container}>
+                  <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+                  <Text style={styles.title}>
+                    Swiped all cards
+                  </Text>
+                </View>
+              )
+            }}
             cardIndex={0}
             marginBottom={140}
             marginTop={10}
@@ -62,6 +96,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
         </Swiper>
       </View>
   );
+}
 }
 
 const styles = StyleSheet.create({
