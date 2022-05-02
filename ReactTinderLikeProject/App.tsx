@@ -10,9 +10,7 @@ import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 import store from './features';
 import Loading from './components/Loading';
-import * as dotenv from 'dotenv';
 
-dotenv.config();
 let persistor = persistStore(store);
 
 export default function App() {
