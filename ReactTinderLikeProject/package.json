@@ -23,6 +23,7 @@
     "@rneui/base": "^4.0.0-rc.1",
     "@rneui/themed": "^4.0.0-rc.1",
     "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
     "expo": "~44.0.0",
     "expo-asset": "~8.4.4",
     "expo-constants": "~13.0.0",

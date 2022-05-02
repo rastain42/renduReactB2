@@ -1,11 +1,10 @@
 import axios from 'axios';
-import store from '../features';
 import { useSelector } from "react-redux";
 
 const user = useSelector((state) => state.user.value);
 
 const axiosApiInstance = axios.create({
-  baseURL: 'https://2c45-2a01-e0a-1d1-8260-f87c-698-fcb1-ea97.eu.ngrok.io',
+  baseURL: process.env.NGROK_FORWARD_URL,
 });
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(

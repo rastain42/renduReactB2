@@ -19,7 +19,7 @@ les utilisateurs qui matchent peuvent s'envoyer des messages
 
 - Front, interface en réact
 
-- API en ruby onrails
+- API nodejs / typescript
 
 ## roadmap
 
@@ -76,5 +76,6 @@ préciser l'adresse de forward dans le .env
 
 ```
 cd .\ReactTinderLikeProject\
+yarn install
 expo start
 ```
