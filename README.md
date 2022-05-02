@@ -1,7 +1,7 @@
 # rendu React - Matcher
 
 Ce projet a pour but de challenger nos compétences en développement,
-à travers différents frameworks : ruby on rails, react native
+à travers différents frameworks : node avec typescript, et react native
 
 ## Features
 
