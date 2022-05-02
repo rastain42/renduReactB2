@@ -3,7 +3,7 @@
 Ce projet a pour but de challenger nos compétences en développement,
 à travers différents frameworks : node avec typescript, et react native
 
-## Features
+## Objectif de Features
 
 - authentification, account management
 l'utilisateur pourra créer un compte et mettre à jour ses information et ses photos
@@ -48,3 +48,33 @@ les utilisateurs qui matchent peuvent s'envoyer des messages
 4. '' vue modification du profil
 
 5. vue du chat
+
+## Maquettes
+
+link:
+
+## USAGE DEV
+
+### lancer l'api
+
+```ps
+cd .\BackDev\
+npm i 
+npm start
+```
+
+pour forwarder le port 3000 vers internet sur lequel écoute l'api :
+ouvrir un autre shell
+
+```
+ngrok http 3000
+```
+
+préciser l'adresse de forward dans le .env
+
+### lancer l'appli
+
+```
+cd .\ReactTinderLikeProject\
+expo start
+```

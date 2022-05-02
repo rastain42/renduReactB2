@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Server auto reload",
+      "runtimeExecutable": "/Users/yanissloisel/.nvm/versions/node/v16.8.0/bin/node",
+      "program": "${workspaceFolder}/src/index.ts",
+      "outFiles": [
+        "${workspaceFolder}/**/*.js"
+      ],
+      "env": {
+        "DEBUG": "loopback:connector:*"
+      },
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "envFile": "${workspaceFolder}/.env",
+    }
+  ]
+}
