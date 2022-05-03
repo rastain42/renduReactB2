@@ -53,7 +53,6 @@ export const userSlice = createSlice({
     }), 
     builder.addCase(userSignUp.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log("good")
 
     }),
     builder.addCase(userSignUp.rejected, (state, action) => {

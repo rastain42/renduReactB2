@@ -11,29 +11,29 @@ import { useSelector } from 'react-redux';
 // import {getImages } from '../api/users'
 
 export default function TabTwoScreen() {
-    // const [usersImages, setusersImages] = useState([]);
-    // const user = useSelector((state) => state.user.value);
+    const [usersImages, setusersImages] = useState([]);
+    const user = useSelector((state) => state.user.value);
     
-    // const getImages = () => {
-    //     axios.get(API_URL + '/users/' + user.id+ '/app-files')
-    //    .then(res => {
-    //        return res.data
-    //    })
-    //    .catch(err => {
-    //        console.log(err)
-    //    })
-    // }
+    const getImages = () => {
+        axios.get('https://bfff-2a01-cb19-7b8-9700-b097-e108-db3d-2c13.ngrok.io' + '/users/' + "2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2"+ '/app-files')
+       .then(res => {
+           return res.data
+       })
+       .catch(err => {
+           console.log(err)
+       })
+    }
     
-    // useEffect(() => {
-    //     try {
-    //         const response: any = getImages()
-    //         setusersImages(response)
+    useEffect(() => {
+        try {
+            const response: any = getImages()
+            setusersImages(response)
             
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    //     // Create an scoped async function in the hook
-    //   }, []);
+        } catch (error) {
+            console.log(error)
+        }
+        // Create an scoped async function in the hook
+      }, []);
   return (
     <View style={styles.container}>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />

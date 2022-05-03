@@ -10,7 +10,6 @@ const axiosApiInstance = axios.create({
 // Request interceptor for API calls
 axiosApiInstance.interceptors.request.use(
   async (config) => {
-    console.log("user", user)
     if (user.isAuthenticated) {
       config.headers = {
         Authorization: `Bearer ${user.token}`,

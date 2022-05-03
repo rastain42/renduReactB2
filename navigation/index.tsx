@@ -23,6 +23,8 @@ import { useSelector } from 'react-redux';
 import { AsyncStorage } from 'react-native';
 import RegisterScreen from '../screens/RegisterScreen';
 import StartScreen from '../screens/StartScreem';
+import ConversationScreen from '../screens/Conversations';
+import ConversationShowScreen from '../screens/ConversationShow';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -42,7 +44,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const user = useSelector(state => state.user.value);
-  console.log("userr", user)
 
 
   return (
@@ -50,10 +51,10 @@ function RootNavigator() {
       {user.isAuthenticated === true  && <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />}
       {user.isAuthenticated === false  && <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }}/>}
       {user.isAuthenticated === false  && <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>}
-      {user.isAuthenticated === false  && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }}/>}
+      {user.isAuthenticated === false  && <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} initialParams={{}}/>}
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Group  screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name="Chat" initialParams={{params: {}}}component={ConversationShowScreen}  />
       </Stack.Group>
     </Stack.Navigator>
   );
@@ -87,6 +88,14 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Profile',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        }}
+      />
+       <BottomTab.Screen
+        name="Tab"
+        component={ConversationScreen}
+        options={{
+          title: 'Conversations',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
