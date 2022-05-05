@@ -51,7 +51,17 @@ les utilisateurs qui matchent peuvent s'envoyer des messages
 
 ## Maquettes
 
-link:
+Aperçu :
+
+![Screenshot](Screen1.png)
+
+![Screenshot](Screen2.png)
+
+![Screenshot](Screen21.png)
+
+![Screenshot](Screen3.png)
+
+![Screenshot](Screen4.png)
 
 ## USAGE DEV
 

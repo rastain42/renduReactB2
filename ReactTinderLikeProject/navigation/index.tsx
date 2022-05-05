@@ -25,6 +25,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import StartScreen from '../screens/StartScreem';
 import ConversationScreen from '../screens/Conversations';
 import ConversationShowScreen from '../screens/ConversationShow';
+import { MaterialIcons } from '@expo/vector-icons'; 
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -80,7 +82,7 @@ function BottomTabNavigator() {
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
           title: 'Explore',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         })}
       />
       <BottomTab.Screen
@@ -88,7 +90,7 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
        <BottomTab.Screen
@@ -96,7 +98,7 @@ function BottomTabNavigator() {
         component={ConversationScreen}
         options={{
           title: 'Conversations',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="mobile-phone" color={color} />,
         }}
       />
     </BottomTab.Navigator>
