@@ -9,13 +9,15 @@ import axios from 'axios'
 import {API_URL} from '@env'
 import { useSelector } from 'react-redux';
 // import {getImages } from '../api/users'
+const ngrokUrl: string = "https://5f07-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io"
+
 
 export default function TabTwoScreen() {
     const [usersImages, setusersImages] = useState([]);
     const user = useSelector((state) => state.user.value);
     
     const getImages = () => {
-        axios.get('https://8ec2-77-196-149-138.eu.ngrok.io' + '/users/' + "2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2"+ '/app-files')
+        axios.get('https://a8ac-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io/users/' + "2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2"+ '/app-files')
        .then(res => {
            return res.data
        })

@@ -76,8 +76,8 @@ préciser l'adresse de forward dans le .env
 
 ```
 cd .\ReactTinderLikeProject\
-npm install
-expo start
+yarn install
+npm start
 ```
 
 ou https://expo.dev/@rastain42/matcher-mobile

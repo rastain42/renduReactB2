@@ -1,5 +1,12 @@
-import {belongsTo, Entity, model, property} from '@loopback/repository';
+import {
+  belongsTo,
+  Entity,
+  hasMany,
+  model,
+  property,
+} from '@loopback/repository';
 import {Meet} from './meet.model';
+import {Message} from './message.model';
 
 @model({settings: {strict: false}})
 export class Conversation extends Entity {
@@ -10,9 +17,14 @@ export class Conversation extends Entity {
   })
   id?: string;
 
-  @belongsTo(() => Meet)
+  // @property({})
+  // usersIds: [];
+
+  @belongsTo(() => Meet, {name: 'meet'})
   meetId: string;
 
+  @hasMany(() => Message)
+  messages: Message[];
   // Define well-known properties here
 
   // Indexer property to allow additional data

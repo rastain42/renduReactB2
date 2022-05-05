@@ -13,6 +13,9 @@ import axios from 'axios';
 import React from 'react';
 import { GiftedChat } from 'react-native-gifted-chat'
 import route  from '@react-navigation/native';
+
+const ngrokUrl: string = "https://5f07-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io"
+
 export default function ConversationShowScreen({route }) {
 
   const { conversation } = route?.params;
@@ -42,7 +45,7 @@ export default function ConversationShowScreen({route }) {
       "conversationId": "string",
       "additionalProp1": {}
     }
-    const conversations = await axios.post('https://8ec2-77-196-149-138.eu.ngrok.io' + '/conversations/' +conversation.id + '/messages')
+    const conversations = await axios.post('https://a8ac-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io/conversations/' +conversation.id + '/messages')
 
   }
  

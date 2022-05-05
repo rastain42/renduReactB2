@@ -11,6 +11,9 @@ import {  Button , Image, ImageBackground} from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
+const ngrokUrl: string = "https://5f07-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io"
+
+
 export default function EditScreenInfo({ path }: { path: string }) {
   const user = useSelector((state) => state.user.value);
 
@@ -29,7 +32,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
   
 
   const getUsers = async () => {
-    const result = await  axios.get('https://8ec2-77-196-149-138.eu.ngrok.io' + '/users/')
+    const result = await  axios.get('https://a8ac-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io/users/')
     result.data.map((user: any) => {
     })
   
@@ -44,7 +47,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
     }, [2]);
 
     const match = async (userId: string) => {
-      const result = await  axios.post('https://8ec2-77-196-149-138.eu.ngrok.io' + '/meets/', {
+      const result = await  axios.post('https://a8ac-2a01-e0a-1d1-8260-90c9-71e8-e3ea-9c84.eu.ngrok.io/meets/', {
           "usersIds": ["2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2", userId]
       })
       if(result.data.matched == true) {

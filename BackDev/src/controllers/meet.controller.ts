@@ -18,7 +18,11 @@ import {
   response,
 } from '@loopback/rest';
 import {Meet} from '../models';
-import {ConversationRepository, MeetRepository} from '../repositories';
+import {
+  ConversationRepository,
+  MeetRepository,
+  UserRepository,
+} from '../repositories';
 
 export class MeetController {
   constructor(
@@ -26,6 +30,8 @@ export class MeetController {
     public meetRepository: MeetRepository,
     @repository(ConversationRepository)
     public conversationRepository: ConversationRepository,
+    @repository(UserRepository)
+    public userRepository: UserRepository,
   ) {}
 
   @post('/meets')
@@ -44,17 +50,39 @@ export class MeetController {
         },
       },
     })
-    meet: Omit<Meet, 'id'>,
+    meet: Meet,
   ): Promise<any> {
-    const currentMeet = await this.meetRepository.findOne({
+    const userIds: any = [];
+    let userIdsReversed: any = [];
+
+    meet.usersIds.forEach((userId: string) => {
+      userIds.push(userId);
+      userIdsReversed.push(userId);
+    });
+    userIdsReversed = userIdsReversed.reverse();
+    console.log(userIds, userIdsReversed);
+
+    const currentMeet: any = await this.meetRepository.findOne({
       where: {
-        or: [{usersIds: meet.usersIds}, {usersIds: meet.usersIds.reverse()}],
+        or: [{usersIds: userIds}, {usersIds: userIdsReversed}],
       },
     });
+    console.log(currentMeet, userIdsReversed, userIds);
     if (currentMeet) {
-      await this.meetRepository.updateById(currentMeet.id, {matched: true});
-      await this.conversationRepository.create({meetId: currentMeet.id});
-      return {matched: true};
+      console.log('hello');
+      const res: any = [];
+      meet.usersIds.forEach((userId: string) => {
+        res.push(this.userRepository.findById(userId));
+      });
+      const users = await Promise.all(res);
+      const conversation = await this.conversationRepository.create({
+        meetId: currentMeet.id,
+        users: users,
+      });
+      const updatedMeet = await this.meetRepository.updateById(currentMeet.id, {
+        matched: true,
+      });
+      return {matched: true, ...conversation, updatedMeet};
     }
     return this.meetRepository.create(meet);
   }
