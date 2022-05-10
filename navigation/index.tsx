@@ -47,7 +47,7 @@ function RootNavigator() {
 
 
   return (
-    <Stack.Navigator>
+    <Stack.Navigator >
       {user.isAuthenticated === true  && <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />}
       {user.isAuthenticated === false  && <Stack.Screen name="Start" component={StartScreen} options={{ headerShown: false }}/>}
       {user.isAuthenticated === false  && <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }}/>}

@@ -10,6 +10,8 @@ import { Text, View } from './Themed';
 import {  Button , Image, ImageBackground} from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Loader from '../components/Loader';
+
 
 export default function EditScreenInfo({ path }: { path: string }) {
   const user = useSelector((state) => state.user.value);
@@ -29,7 +31,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
   
 
   const getUsers = async () => {
-    const result = await  axios.get('https://bfff-2a01-cb19-7b8-9700-b097-e108-db3d-2c13.ngrok.io' + '/users/')
+    const result = await  axios.get('https://matcherapi.herokuapp.com/' + 'users/')
     result.data.map((user: any) => {
     })
   
@@ -44,8 +46,8 @@ export default function EditScreenInfo({ path }: { path: string }) {
     }, [2]);
 
     const match = async (userId: string) => {
-      const result = await  axios.post('https://bfff-2a01-cb19-7b8-9700-b097-e108-db3d-2c13.ngrok.io' + '/meets/', {
-          "usersIds": ["2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2", userId]
+      const result = await  axios.post('https://matcherapi.herokuapp.com/' + 'meets/', {
+          "usersIds": [user.id, userId]
       })
       if(result.data.matched == true) {
       }
@@ -55,10 +57,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
 if(users.length === 0) {
   return (
     <View style={styles.container}>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.title}>
-        Loading
-      </Text>
+      <Loader />
     </View>
   );
 } else {
@@ -68,7 +67,7 @@ if(users.length === 0) {
             cards={getCardsLength(users.length)}
             renderCard={(card: number) => {
             
-                const image = { uri: "https://d2qp0siotla746.cloudfront.net/img/use-cases/profile-picture/template_0.jpg" };
+                const image = { uri: users[card].image };
                 return (
                   <View style={styles.card}>
                       <ImageBackground source={image} resizeMode="cover" style={styles.image}>

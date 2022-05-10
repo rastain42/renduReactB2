@@ -11,44 +11,57 @@ import {  Button , Image, ImageBackground} from 'react-native';
 import { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 import React from 'react';
-import { GiftedChat } from 'react-native-gifted-chat'
+import { Bubble, GiftedChat } from 'react-native-gifted-chat'
 import route  from '@react-navigation/native';
 export default function ConversationShowScreen({route }) {
 
   const { conversation } = route?.params;
   const user = useSelector((state) => state.user.value);
+  console.log("CONV", user)
 
   const [messages, setMessages] = useState([]);
+
+  const getMessages = async () => {
+    const messages = await axios.get('https://matcherapi.herokuapp.com/' + '/conversations/' + conversation.id + '/messages')
+    const mess = messages.data.map((m: any) => {
+      m['_id'] = m.id
+      m['text'] = m.content
+      m['user'] = {
+        _id: m.author,
+        name: "TM",
+        avatar: "https://bootdey.com/img/Content/avatar/avatar7.png"
+      }
+    })
+    setMessages(messages.data.reverse())
+  }
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date() as any,
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
-  }, [])
+    const timer = setTimeout(() => {
+      getMessages()
+    } , 10000)
+    return () => clearTimeout(timer);
+  }, [getMessages])
 
   
-  const sendMessage = async(message: string) => {
+  const sendMessage = async(message: any) => {
     const playload = {
-      "content": `${message}`,
+      "content": `${message?.text}`,
       "author": `${user.id}`,
-      "conversationId": "string",
+      "conversationId": `${conversation.id}`,
       "additionalProp1": {}
     }
-    const conversations = await axios.post('https://bfff-2a01-cb19-7b8-9700-b097-e108-db3d-2c13.ngrok.io' + '/conversations/' +conversation.id + '/messages')
-
+    console.log(playload)
+    try {
+      const returnedMessage = await axios.post('https://matcherapi.herokuapp.com/' + '/conversations/' +conversation.id + '/messages', playload)
+      return returnedMessage
+    } catch (error) {
+      console.log(error)
+    }
   }
  
   const onSend = useCallback((messages = []) => {
     console.log(messages)
     setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
+    sendMessage(messages[0])
 
   }, [])
  
@@ -57,53 +70,23 @@ export default function ConversationShowScreen({route }) {
       messages={messages}
       onSend={messages => onSend(messages)}
       user={{
-        _id: 1,
+        _id: user.id,
+      }}
+      renderBubble={props => {
+        return (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              left: {
+                backgroundColor: 'white',
+              },
+            }}
+          />
+        );
       }}
       showAvatarForEveryMessage={false}
     />
   )
-  
+
  
 }
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: '#DCDCDC',
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    padding: 10,
-  },
-  pic: {
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-  },
-  nameContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 280,
-  },
-  nameTxt: {
-    marginLeft: 15,
-    fontWeight: '600',
-    color: '#222',
-    fontSize: 18,
-    width:170,
-  },
-  mblTxt: {
-    fontWeight: '200',
-    color: '#777',
-    fontSize: 13,
-  },
-  msgContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  msgTxt: {
-    fontWeight: '400',
-    color: '#008B8B',
-    fontSize: 12,
-    marginLeft: 15,
-  }
-});

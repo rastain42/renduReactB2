@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { whoami } from '../api/users';
 import Swiper  from 'react-native-deck-swiper';
+import AnimatedLoader from "react-native-animated-loader";
 
 import Colors from '../constants/Colors';
 import { MonoText } from './StyledText';
@@ -11,13 +12,15 @@ import {  Button , Image, ImageBackground} from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import React from 'react';
+import Loader from '../components/Loader';
 
 export default function ConversationScreen({navigation}) {
   const [conversations, setConversations] = useState([]);
   const user = useSelector((state) => state.user.value);
 
   const getConversations = async () => {
-    const conversations = await axios.get('https://bfff-2a01-cb19-7b8-9700-b097-e108-db3d-2c13.ngrok.io' + '/users/' + "2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2"+ '/conversations')
+    const conversations = await axios.get('https://matcherapi.herokuapp.com/' + 'users/' + user.id + '/conversations')
+    // console.log("CCCCCC", conversations.data)
     setConversations(conversations.data)
  
 }
@@ -33,28 +36,34 @@ useEffect(() => {
  if(conversations && conversations.length === 0) {
   return (
     <View style={styles.container}>
-          <Text style={styles.title}>
-            Conversations
-          </Text>
+          <Loader />
     </View>
 );
  } else {
+   console.log(conversations.length)
   const renderItem = ({item}) => {
     let name = ''
+    let image = ''
     item.users.forEach((u: any) => {
       if(u.id !== user.id) {
         name = u.name
+        image = u.image
+        if (!u.image) {
+          image = "https://villagesonmacarthur.com/wp-content/uploads/2020/12/Blank-Avatar.png"
+        }
       }
+      console.log(image)
     })
     const onNavigateToHome = async () => {
       navigation.navigate("Chat");
     };
     return (
-      <TouchableOpacity onPress={ () => {navigation.navigate("Chat", {
+      <TouchableOpacity style={styles.container} onPress={ () => {navigation.navigate("Chat", {
         conversation: item
       })}}>
         <View style={styles.row}>
-          <Image source={{ uri: "https://bootdey.com/img/Content/avatar/avatar7.png" }} style={styles.pic} />
+          <Image source={{ uri: image }} style={styles.pic} />
+
           <View>
             <View style={styles.nameContainer}>
               <Text style={styles.nameTxt} numberOfLines={1} ellipsizeMode="tail">{ name}</Text>
@@ -85,6 +94,9 @@ useEffect(() => {
 
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#FFFFFF",
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

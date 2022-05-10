@@ -1,27 +1,29 @@
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView } from 'react-native';
+import { StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView, Button } from 'react-native';
 import { theme } from '../core/theme'
+import { logout } from '../features/user'
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import axios from 'axios'
 import {API_URL} from '@env'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import {getImages } from '../api/users'
 
 export default function TabTwoScreen() {
     const [usersImages, setusersImages] = useState([]);
     const user = useSelector((state) => state.user.value);
+    console.log(user.id)
     
     const getImages = () => {
-        axios.get('https://bfff-2a01-cb19-7b8-9700-b097-e108-db3d-2c13.ngrok.io' + '/users/' + "2b2509d9-1cb3-42b3-bffe-2a000b4ef6a2"+ '/app-files')
-       .then(res => {
-           return res.data
-       })
-       .catch(err => {
-           console.log(err)
-       })
+        axios.get('https://matcherapi.herokuapp.com/' + '/users/' + user.id+ 'app-files')
+        .then(res => {
+            return res.data
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
     
     useEffect(() => {
@@ -33,9 +35,9 @@ export default function TabTwoScreen() {
             console.log(error)
         }
         // Create an scoped async function in the hook
-      }, []);
-  return (
-    <View style={styles.container}>
+    }, []);
+    return (
+        <View style={styles.container}>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <ProfileScreen />
     </View>
@@ -43,8 +45,9 @@ export default function TabTwoScreen() {
 }
 
 export function ProfileScreen(){
-
-
+    
+    const dispatch = useDispatch();
+    
         
         // const user = useSelector((state) => state.user.value);
         // console.log(user)
@@ -55,7 +58,12 @@ export function ProfileScreen(){
     <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.titleBar}>
+            
             </View>
+      <Button
+        title="Se déconnecter"
+        onPress={() => dispatch(logout())}
+      />
 
             <View style={styles.subcontainer}>
                 <View style={styles.profileImage}>
