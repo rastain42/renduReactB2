@@ -15,6 +15,7 @@ import Loader from '../components/Loader';
 
 export default function EditScreenInfo({ path }: { path: string }) {
   const user = useSelector((state) => state.user.value);
+  console.log(user.id)
 
 
   const [users, setusers] = useState([]);
@@ -31,8 +32,9 @@ export default function EditScreenInfo({ path }: { path: string }) {
   
 
   const getUsers = async () => {
-    const result = await  axios.get('https://matcherapi.herokuapp.com/' + 'users/')
+    const result = await  axios.get('https://matcherapi.herokuapp.com/me/' + user.id +  '/users/')
     result.data.map((user: any) => {
+      console.log(user)
     })
   
 
