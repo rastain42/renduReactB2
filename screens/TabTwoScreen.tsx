@@ -9,9 +9,12 @@ import { Text, View } from '../components/Themed';
 import axios from 'axios'
 import {API_URL} from '@env'
 import { useDispatch, useSelector } from 'react-redux';
+import { geolocFinder } from '../helpers/geolocFinder';
 // import {getImages } from '../api/users'
 
 export default function TabTwoScreen() {
+   
+  
     const [usersImages, setusersImages] = useState([]);
     const user = useSelector((state) => state.user.value);
     console.log(user.id)
@@ -45,6 +48,7 @@ export default function TabTwoScreen() {
 }
 
 export function ProfileScreen(){
+    var loc = geolocFinder();
     
     const dispatch = useDispatch();
     
@@ -85,8 +89,12 @@ export function ProfileScreen(){
 
             <View style={styles.statsContainer}>
                 <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>483</Text>
-                    <Text style={[styles.text, styles.subText]}>Posts</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{loc.longitude}</Text>
+                    <Text style={[styles.text, styles.subText]}>longitude</Text>
+                </View>
+                <View style={styles.statsBox}>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{loc.latitude}</Text>
+                    <Text style={[styles.text, styles.subText]}>latitude</Text>
                 </View>
                 <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
                     <Text style={[styles.text, { fontSize: 24 }]}>45,844</Text>
