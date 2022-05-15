@@ -13,14 +13,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import React from 'react';
 import Loader from '../components/Loader';
+import apiSettings from '../api';
 
 export default function ConversationScreen({navigation}) {
   const [conversations, setConversations] = useState([]);
   const user = useSelector((state) => state.user.value);
 
   const getConversations = async () => {
-    const conversations = await axios.get('https://matcherapi.herokuapp.com/' + 'users/' + user.id + '/conversations')
-    // console.log("CCCCCC", conversations.data)
+    const conversations = await axios.get(`${apiSettings.baseURL}` + '/users/' + user.id + '/conversations')
     setConversations(conversations.data)
  
 }

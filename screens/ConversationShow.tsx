@@ -13,6 +13,7 @@ import axios from 'axios';
 import React from 'react';
 import { Bubble, GiftedChat } from 'react-native-gifted-chat'
 import route  from '@react-navigation/native';
+import apiSettings from '../api';
 export default function ConversationShowScreen({route }) {
 
   const { conversation } = route?.params;
@@ -22,7 +23,7 @@ export default function ConversationShowScreen({route }) {
   const [messages, setMessages] = useState([]);
 
   const getMessages = async () => {
-    const messages = await axios.get('https://matcherapi.herokuapp.com/' + '/conversations/' + conversation.id + '/messages')
+    const messages = await axios.get(`${apiSettings.baseURL}/` + 'conversations/' + conversation.id + '/messages')
     const mess = messages.data.map((m: any) => {
       m['_id'] = m.id
       m['text'] = m.content
@@ -51,7 +52,7 @@ export default function ConversationShowScreen({route }) {
     }
     console.log(playload)
     try {
-      const returnedMessage = await axios.post('https://matcherapi.herokuapp.com/' + '/conversations/' +conversation.id + '/messages', playload)
+      const returnedMessage = await axios.post(`${apiSettings.baseURL}/` + 'conversations/' +conversation.id + '/messages', playload)
       return returnedMessage
     } catch (error) {
       console.log(error)

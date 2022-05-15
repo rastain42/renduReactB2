@@ -12,6 +12,7 @@ import store from './features';
 import Loading from './components/Loading';
 
 let persistor = persistStore(store);
+console.log(process.env)
 
 export default function App() {
   const isLoadingComplete = useCachedResources();

@@ -9,8 +9,6 @@ export function geolocFinder() {
     var [latitude, setLatitude] = useState(null);
     var [longitude, setLongitude] = useState(null);
   
-  
-  
     useEffect(() => {
       (async () => {
         let { status } = await Location.requestForegroundPermissionsAsync();

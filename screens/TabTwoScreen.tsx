@@ -10,6 +10,7 @@ import axios from 'axios'
 import {API_URL} from '@env'
 import { useDispatch, useSelector } from 'react-redux';
 import { geolocFinder } from '../helpers/geolocFinder';
+import apiSettings from '../api';
 // import {getImages } from '../api/users'
 
 export default function TabTwoScreen() {
@@ -20,7 +21,7 @@ export default function TabTwoScreen() {
     console.log(user.id)
     
     const getImages = () => {
-        axios.get('https://matcherapi.herokuapp.com/' + '/users/' + user.id+ 'app-files')
+        axios.get(`${apiSettings.baseURL}/` + '/users/' + user.id+ 'app-files')
         .then(res => {
             return res.data
         })

@@ -11,6 +11,7 @@ import {  Button , Image, ImageBackground} from 'react-native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import apiSettings from '../api';
 
 
 export default function EditScreenInfo({ path }: { path: string }) {
@@ -32,7 +33,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
   
 
   const getUsers = async () => {
-    const result = await  axios.get('https://matcherapi.herokuapp.com/me/' + user.id +  '/users/')
+    const result = await  axios.get(`${apiSettings.baseURL}/me/` + user.id +  '/users/')
     result.data.map((user: any) => {
       console.log(user)
     })
@@ -48,7 +49,7 @@ export default function EditScreenInfo({ path }: { path: string }) {
     }, [2]);
 
     const match = async (userId: string) => {
-      const result = await  axios.post('https://matcherapi.herokuapp.com/' + 'meets/', {
+      const result = await  axios.post(`${apiSettings.baseURL}/` +  'users/' + user.id + '/meets/', {
           "usersIds": [user.id, userId]
       })
       if(result.data.matched == true) {
