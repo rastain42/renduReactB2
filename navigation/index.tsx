@@ -25,6 +25,7 @@ import RegisterScreen from '../screens/RegisterScreen';
 import StartScreen from '../screens/StartScreem';
 import ConversationScreen from '../screens/Conversations';
 import ConversationShowScreen from '../screens/ConversationShow';
+import EditUser from '../screens/EditUser';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -55,6 +56,7 @@ function RootNavigator() {
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group  screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Chat" initialParams={{params: {}}}component={ConversationShowScreen}  />
+        <Stack.Screen name="EditUser" initialParams={{params: {}}}component={EditUser}  />
       </Stack.Group>
     </Stack.Navigator>
   );

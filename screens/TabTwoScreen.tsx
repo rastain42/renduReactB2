@@ -9,13 +9,11 @@ import { Text, View } from '../components/Themed';
 import axios from 'axios'
 import {API_URL} from '@env'
 import { useDispatch, useSelector } from 'react-redux';
-import { geolocFinder } from '../helpers/geolocFinder';
 import apiSettings from '../api';
+import {Picker} from '@react-native-picker/picker';
 // import {getImages } from '../api/users'
 
-export default function TabTwoScreen() {
-   
-  
+export default function TabTwoScreen({navigation}) {
     const [usersImages, setusersImages] = useState([]);
     const user = useSelector((state) => state.user.value);
     console.log(user.id)
@@ -43,21 +41,17 @@ export default function TabTwoScreen() {
     return (
         <View style={styles.container}>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <ProfileScreen />
+      <ProfileScreen navigation={navigation}  />
     </View>
   );
 }
 
-export function ProfileScreen(){
-    var loc = geolocFinder();
+export function ProfileScreen({navigation}){
+    const [selectedLanguage, setSelectedLanguage] = useState();
+    console.log(navigation)
+
     
     const dispatch = useDispatch();
-    
-        
-        // const user = useSelector((state) => state.user.value);
-        // console.log(user)
-          
-    
     
   return (
     <SafeAreaView style={styles.container}>
@@ -79,7 +73,7 @@ export function ProfileScreen(){
                 </View>
                 <View style={styles.active}></View>
                 <View style={styles.add}>
-                    <Ionicons name="ios-add" size={48} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
+                    <Ionicons name="ios-add" size={48} onPress={() =>  navigation.navigate("EditUser")} color="#DFD8C8" style={{ marginTop: 6, marginLeft: 2 }}></Ionicons>
                 </View>
             </View>
 
@@ -89,14 +83,6 @@ export function ProfileScreen(){
             </View>
 
             <View style={styles.statsContainer}>
-                <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>{loc.longitude}</Text>
-                    <Text style={[styles.text, styles.subText]}>longitude</Text>
-                </View>
-                <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>{loc.latitude}</Text>
-                    <Text style={[styles.text, styles.subText]}>latitude</Text>
-                </View>
                 <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
                     <Text style={[styles.text, { fontSize: 24 }]}>45,844</Text>
                     <Text style={[styles.text, styles.subText]}>Followers</Text>
@@ -106,7 +92,6 @@ export function ProfileScreen(){
                     <Text style={[styles.text, styles.subText]}>Following</Text>
                 </View>
             </View>
-
             <View style={{ marginTop: 32 }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <View style={styles.mediaImageContainer}>

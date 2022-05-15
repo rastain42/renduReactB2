@@ -14,14 +14,12 @@ import { nameValidator } from '../helpers/nameValidator'
 import { userSignUp } from '../features/user'
 import { unwrapResult } from '@reduxjs/toolkit'
 import { useAppDispatch } from '../features'
-import { geolocFinder } from '../helpers/geolocFinder'
 
 export default function RegisterScreen({ navigation }) {
   const dispatch = useAppDispatch();
   const [name, setName] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
-  var loc = geolocFinder();
 
   const onSignUpPressed = () => {
     const nameError = nameValidator(name.value)

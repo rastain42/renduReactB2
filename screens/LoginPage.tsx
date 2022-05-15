@@ -19,7 +19,7 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
-import { geolocFinder } from '../helpers/geolocFinder';
+import { geolocFinder } from '../helpers/localisation';
 
 
 
@@ -31,7 +31,8 @@ export default function Login({navigation}){
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
   const dispatch = useAppDispatch();
-  var loc = geolocFinder();
+  const loc = geolocFinder();
+  console.log("LOXX", loc)
 
   
   const onLoginPressed = () => {

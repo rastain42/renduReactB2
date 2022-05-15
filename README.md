@@ -63,25 +63,6 @@ Aperçu :
 
 ![Screenshot](Screen4.png)
 
-## USAGE DEV
-
-### lancer l'api
-
-```ps
-cd .\BackDev\
-npm i 
-npm start
-```
-
-pour forwarder le port 3000 vers internet sur lequel écoute l'api :
-ouvrir un autre shell
-
-```
-ngrok http 3000
-```
-
-préciser l'adresse de forward dans le .env
-
 ### lancer l'appli
 
 ```
