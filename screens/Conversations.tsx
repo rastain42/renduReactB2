@@ -37,8 +37,10 @@ useEffect(() => {
   return (
     <View style={styles.container}>
           <Loader />
+          <Text> You don't have any users left</Text>
     </View>
 );
+
  } else {
    console.log(conversations.length)
   const renderItem = ({item}) => {
