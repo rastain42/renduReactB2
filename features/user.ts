@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import { signIn, register } from "../api/users";
 
-const initialStateValue = { name: "", token: '', email: "" , id: "", isAuthenticated: false};
+const initialStateValue = { name: "", token: '', email: "" , id: "", image: "", isAuthenticated: false};
 
 export const userSignIn = createAsyncThunk(
   'users/login',

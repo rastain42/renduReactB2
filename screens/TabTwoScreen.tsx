@@ -2,7 +2,7 @@ import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView, Button } from 'react-native';
 import { theme } from '../core/theme'
-import { logout } from '../features/user'
+import user, { logout } from '../features/user'
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
@@ -15,8 +15,7 @@ import {Picker} from '@react-native-picker/picker';
 
 export default function TabTwoScreen({navigation}) {
     const [usersImages, setusersImages] = useState([]);
-    const user = useSelector((state) => state.user.value);
-    console.log(user.id)
+    console.log(user.name)
     
     const getImages = () => {
         axios.get(`${apiSettings.baseURL}/` + '/users/' + user.id+ 'app-files')
@@ -49,6 +48,8 @@ export default function TabTwoScreen({navigation}) {
 export function ProfileScreen({navigation}){
     const [selectedLanguage, setSelectedLanguage] = useState();
     console.log(navigation)
+    const user = useSelector((state) => state.user.value);
+
 
     
     const dispatch = useDispatch();
@@ -66,7 +67,7 @@ export function ProfileScreen({navigation}){
 
             <View style={styles.subcontainer}>
                 <View style={styles.profileImage}>
-                    <Image source={require("../assets/images/profile-pic.jpg")} style={styles.image} resizeMode="center"></Image>
+                    <Image source={{ uri: user.image }}style={styles.image} resizeMode="center"></Image>
                 </View>
                 <View style={styles.dm}>
                     <MaterialIcons name="chat" size={18} color="#DFD8C8"></MaterialIcons>
@@ -78,7 +79,7 @@ export function ProfileScreen({navigation}){
             </View>
 
             <View style={styles.infoContainer}>
-                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>Julie</Text>
+                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>{ user.name }</Text>
                 <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>Photographer</Text>
             </View>
 

@@ -31,7 +31,7 @@ export default function RegisterScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    const originalPromiseResult = dispatch(userSignUp({email: email.value, password: password.value, name: name.value, location:loc}))  
+    const originalPromiseResult = dispatch(userSignUp({email: email.value, password: password.value, name: name.value}))  
     .then(unwrapResult)
     .then( (originalPromiseResult) => {
       onNavigateToLogin()
